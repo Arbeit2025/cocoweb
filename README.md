@@ -1,5 +1,7 @@
 # cocoweb — Cocoa Mascot（Web試作）
 
+**Live Demo:** https://cocoweb.onrender.com/
+
 画面の下を歩く、Web版デスクトップマスコットの試作です。
 PCのブラウザでもスマホのブラウザでも動きます。
 
@@ -30,6 +32,6 @@ Flaskの開発サーバーは `flask --app app run` でも起動できます。
 
 ## 未実施・今後の候補
 
-- Render等への公開デプロイ（未実施）
+- 無料プランではSQLiteデータが再デプロイ等で消える（ココアボタンと同じ）
 - キャラクター画像の差し替え（イラスト／Live2D等）
 - Windowsデスクトップ版（透明ウィンドウ常駐）への移植
