@@ -26,23 +26,16 @@ header p{margin:6px 0 0;color:#6b5546;font-size:.95rem;}
 .plant{position:absolute;right:30px;bottom:32%;font-size:52px;}
 .books{position:absolute;left:30px;bottom:32%;font-size:40px;}
 .floor-line{position:absolute;left:0;right:0;bottom:32%;height:2px;background:#d9b98c;}
-#mascot{position:absolute;bottom:12px;left:40px;width:148px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;}
+#mascot{position:absolute;bottom:12px;left:40px;width:112px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;}
 #mascot.dragging{cursor:grabbing;}
 #mascotInner{transition:transform .18s;}
 #mascot.facing-left #mascotInner{transform:scaleX(-1);}
-#mascot.walking #charBody{animation:bob .36s infinite alternate ease-in-out;}
+#charImg{display:block;width:100%;pointer-events:none;filter:drop-shadow(0 4px 5px rgba(90,55,25,.35));}
+#mascot.walking #charBody{animation:bob .34s infinite alternate ease-in-out;transform-origin:50% 100%;}
 #mascot.jumping #charBody{animation:jump .38s ease-out;}
-#mascot.sitting #charBody{transform:translateY(16px);}
-#mascot.sitting .legL{transform:rotate(62deg);}
-#mascot.sitting .legR{transform:rotate(58deg);}
-@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+#mascot.sitting #charBody{transform:translateY(14px) scale(.97);}
+@keyframes bob{from{transform:translateY(0) rotate(-1.7deg)}to{transform:translateY(-7px) rotate(1.7deg)}}
 @keyframes jump{0%{transform:translateY(0)}45%{transform:translateY(-26px)}100%{transform:translateY(0)}}
-.eye{transform-box:fill-box;transform-origin:center;animation:blink 4.6s infinite;}
-@keyframes blink{0%,91%,100%{transform:scaleY(1)}94%{transform:scaleY(.08)}97%{transform:scaleY(1)}}
-.leg{transform-box:fill-box;transform-origin:top center;}
-#mascot.walking .legL{animation:swing .36s infinite alternate ease-in-out;}
-#mascot.walking .legR{animation:swing .36s infinite alternate-reverse ease-in-out;}
-@keyframes swing{from{transform:rotate(13deg)}to{transform:rotate(-13deg)}}
 #bubble{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);width:max-content;max-width:230px;
  background:#fff;color:#2b1c14;border-radius:14px;padding:9px 12px;font-size:.95rem;line-height:1.45;text-align:center;
  box-shadow:0 3px 10px rgba(80,50,20,.25);opacity:0;pointer-events:none;transition:opacity .2s;white-space:pre-wrap;z-index:3;}
@@ -53,7 +46,7 @@ header p{margin:6px 0 0;color:#6b5546;font-size:.95rem;}
 .controls button.secondary{background:#fff;color:#7a4a2b;box-shadow:inset 0 0 0 2px #7a4a2b;}
 .meta{text-align:center;color:#6b5546;padding-bottom:18px;font-size:.95rem;}
 @media (max-width:560px){
- #mascot{width:124px;}
+ #mascot{width:94px;}
  #stage{height:58vh;}
 }
 </style>
@@ -69,31 +62,7 @@ header p{margin:6px 0 0;color:#6b5546;font-size:.95rem;}
   <div id="mascot" class="walking" role="button" aria-label="ココア" title="タップで呼ぶ／ドラッグで移動">
     <div id="bubble"></div>
     <div id="mascotInner">
-    <svg id="charBody" viewBox="0 0 200 240" width="100%" aria-hidden="true">
-      <!-- legs -->
-      <g class="leg legL"><rect x="82" y="196" width="13" height="30" rx="6" fill="#fff"/><rect x="79" y="220" width="20" height="10" rx="5" fill="#7a4a2b"/></g>
-      <g class="leg legR"><rect x="105" y="196" width="13" height="30" rx="6" fill="#fff"/><rect x="102" y="220" width="20" height="10" rx="5" fill="#7a4a2b"/></g>
-      <!-- back hair -->
-      <rect x="42" y="18" width="116" height="128" rx="52" fill="#6b3f22"/>
-      <!-- body / dress -->
-      <path d="M100 118 L138 202 Q100 216 62 202 Z" fill="#a9713f"/>
-      <path d="M100 118 L122 168 Q100 176 78 168 Z" fill="#fff3df"/>
-      <!-- arms -->
-      <rect x="52" y="132" width="14" height="46" rx="7" fill="#f2c9a4" transform="rotate(14 59 132)"/>
-      <rect x="134" y="132" width="14" height="46" rx="7" fill="#f2c9a4" transform="rotate(-14 141 132)"/>
-      <!-- face -->
-      <circle cx="100" cy="82" r="47" fill="#ffe0bd"/>
-      <!-- front hair -->
-      <path d="M53 82 Q50 28 100 26 Q150 28 147 82 Q132 52 116 60 Q110 42 100 54 Q86 40 82 60 Q64 52 53 82Z" fill="#7d4b27"/>
-      <!-- eyes -->
-      <g class="eye"><ellipse cx="82" cy="88" rx="6" ry="9" fill="#33231a"/></g>
-      <g class="eye"><ellipse cx="118" cy="88" rx="6" ry="9" fill="#33231a"/></g>
-      <circle cx="84" cy="85" r="2" fill="#fff"/><circle cx="120" cy="85" r="2" fill="#fff"/>
-      <!-- cheeks & mouth -->
-      <ellipse cx="68" cy="104" rx="8" ry="5" fill="#f6a08c" opacity=".7"/>
-      <ellipse cx="132" cy="104" rx="8" ry="5" fill="#f6a08c" opacity=".7"/>
-      <path d="M94 106 Q100 111 106 106" stroke="#8a5540" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    </svg>
+    <div id="charBody"><img id="charImg" src="/cocoa.png" alt="ココア"></div>
     </div>
   </div>
 </div>
@@ -233,7 +202,7 @@ say(greet());
 # =========================
 # [S2] OTHER
 # =========================
-from flask import Flask, render_template_string, jsonify
+from flask import Flask, render_template_string, jsonify, send_from_directory
 import sqlite3
 import os
 from datetime import datetime
@@ -301,6 +270,10 @@ def index():
 def count():
     total, today = db_tap()
     return jsonify({"total": total, "today": today})
+
+@app.route("/cocoa.png")
+def cocoa_png():
+    return send_from_directory(BASE_DIR, "cocoa.png", mimetype="image/png")
 
 @app.route("/healthz")
 def healthz():

@@ -49,6 +49,17 @@ def test_count_increments():
     assert r2["total"] == 2 and r2["today"] == 2
 
 
+def test_character_image_served():
+    client = make_client()
+    body = client.get("/").get_data(as_text=True)
+    assert 'id="charImg"' in body
+    assert 'src="/cocoa.png"' in body
+    res = client.get("/cocoa.png")
+    assert res.status_code == 200
+    assert res.content_type.startswith("image/png")
+    assert res.data[:8] == b"\x89PNG\r\n\x1a\n"
+
+
 def test_healthz():
     client = make_client()
     res = client.get("/healthz")
